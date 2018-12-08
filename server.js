@@ -105,6 +105,51 @@ server.post('/api/projects', (req, res) => {
 })
 
 
+// delete project
+
+server.delete('/api/projects/:id', (req, res) => {
+    const {id} = req.params;
+    const project = req.body;
+
+    projectz.remove(id)
+    .then(count => {
+        if(count) {
+            res.json('project was successfully deleted')
+
+        } else {
+            res.status(404).json('invalid ID')
+        }
+
+    })
+    .catch(err => {
+        res.status(500).json('I could not delete that project')
+    })
+
+})
+
+// delete action
+
+server.delete('/api/actions/:id', (req, res) => {
+    const {id} = req.params;
+    const action = req.body;
+
+    actionz.remove(id)
+    .then(count => {
+        if(count) {
+            res.json('action was successfully deleted')
+
+        } else {
+            res.status(404).json('invalid ID')
+        }
+
+    })
+    .catch(err => {
+        res.status(500).json('I could not delete that action')
+    })
+
+})
+
+
 
 // const userDb = require('./data/dbConfig.js')
 
