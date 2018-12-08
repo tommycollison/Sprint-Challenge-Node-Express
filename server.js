@@ -149,6 +149,36 @@ server.delete('/api/actions/:id', (req, res) => {
 
 })
 
+// put action
+
+
+server.put('/api/actions/:id', (req, res) => {
+    const {id} = req.params;
+    const action = req.body;
+ 
+        actionz.update(id, action)
+            .then(count => {
+                if (count){
+                    db.findById(id)
+                        .then(action => {
+                            res.json(action);
+                        })
+                } else {
+                    res
+                        .status(404)
+                        .json({message: "Invalid id"});
+                }
+            })
+            .catch(err => {
+                res
+                    .status(500)
+                    .json({message: 'Could not update this action'});
+            })
+ })
+
+
+// put project
+
 
 
 // const userDb = require('./data/dbConfig.js')
