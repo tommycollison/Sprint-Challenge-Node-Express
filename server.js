@@ -19,6 +19,17 @@ server.get('/api/actions', (req, res) => {
     })
 })
 
+server.get('/api/projects', (req, res) => {
+    projectz.get()
+    .then(project => {
+        res.json(project)
+    })
+    .catch(err => {
+        res.status(500)
+        res.json(`Huh, can't find those projects.`)
+    })
+})
+
 // const userDb = require('./data/dbConfig.js')
 
 server.use(express.json());
