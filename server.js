@@ -29,7 +29,7 @@ server.get('/api/projects', (req, res) => {
     })
 })
 
-// get a specific user 
+// get a specific action 
 
 server.get('/api/actions/:id', (req, res) => {
     const {id} = req.params;
@@ -45,6 +45,25 @@ server.get('/api/actions/:id', (req, res) => {
     .catch(err => {
         res.status(500)
         res.json('Error 500: Idk that action')
+    })
+})
+
+// get a specific project 
+
+server.get('/api/projects/:id', (req, res) => {
+    const {id} = req.params;
+    projectz.get(id)
+    .then(project => {
+        if(project){
+            res.json(project);
+        } else {
+            status(404)
+            res.json(`Huh, don't know that project`)
+        }
+    })
+    .catch(err => {
+        res.status(500)
+        res.json('Error 500: Idk that project')
     })
 })
 
