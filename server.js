@@ -29,17 +29,23 @@ server.get('/api/projects', (req, res) => {
     })
 })
 
-server.get('/api/projects/:id', (req, res) => {
-    const {id} = req.params.id;
-    projectz.get()
-    .then(action => {
-        res.json(action)
+// get a specific user 
+
+server.get('/api/actions/:id', (req, res) => {
+    const {id} = req.params;
+    actionz.get(id)
+    .then(user => {
+        if(user){
+            res.json(user);
+        } else {
+            status(404)
+            res.json(`Huh, don't know that action`)
+        }
     })
     .catch(err => {
         res.status(500)
-        res.json(`Huh, I can't find that specific ID`)
+        res.json('Error 500: Idk that action')
     })
-
 })
 
 // const userDb = require('./data/dbConfig.js')
