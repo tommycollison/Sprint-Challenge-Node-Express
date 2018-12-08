@@ -1,11 +1,15 @@
 const express = require('express'); // import the express package
 
 const server = express(); // creates the server
+
 const router = express.Router();
 const projectsRouter = require('./projects');
 const actionsRouter = require('./actions')
 const actionz = require('./data/helpers/actionModel')
 const projectz = require('./data/helpers/projectModel')
+
+
+server.use(express.json());
 
 server.get('/api/actions', (req, res) => {
     actionz.get()
@@ -67,9 +71,44 @@ server.get('/api/projects/:id', (req, res) => {
     })
 })
 
+// add action
+
+server.post('/api/actions', (req, res) => {
+    console.log(req);
+    const action = req.body;
+    console.log(req.body);
+    console.log('action from body:', action)
+    actionz.insert(action).then(action => {
+        console.log('action from insert method:', action);
+        res.json(action);
+    }).catch(err => {
+        console.log(`console log error inside actions post:`, err)
+        res
+        .status(500)
+        .json('Error: failed to add action')
+    })
+})
+
+// add project
+
+server.post('/api/projects', (req, res) => {
+    const project = req.body;
+    console.log('user from body:', project)
+    projectz.insert(project).then(project => {
+        console.log('user from insert method:', project);
+        res.json(project);
+    }).catch(err => {
+        res
+        .status(500)
+        .json('Error: failed to add project')
+    })
+})
+
+
+
 // const userDb = require('./data/dbConfig.js')
 
-server.use(express.json());
+
 
 // handle requests to the root of the api, the / route
 server.get('/', (req, res) => {
