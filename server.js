@@ -7,7 +7,6 @@ const actionsRouter = require('./actions')
 const actionz = require('./data/helpers/actionModel')
 const projectz = require('./data/helpers/projectModel')
 
-
 server.get('/api/actions', (req, res) => {
     actionz.get()
     .then(action => {
@@ -28,6 +27,19 @@ server.get('/api/projects', (req, res) => {
         res.status(500)
         res.json(`Huh, can't find those projects.`)
     })
+})
+
+server.get('/api/projects/:id', (req, res) => {
+    const {id} = req.params.id;
+    projectz.get()
+    .then(action => {
+        res.json(action)
+    })
+    .catch(err => {
+        res.status(500)
+        res.json(`Huh, I can't find that specific ID`)
+    })
+
 })
 
 // const userDb = require('./data/dbConfig.js')
