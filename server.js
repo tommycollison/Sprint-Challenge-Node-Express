@@ -24,3 +24,11 @@ server.listen(5000, () =>
 
 // you can use nodemon as a short cut to automatically reboot the node application every time you change a file in the directory.
 // you just have to edit the package.json file to include the correct script, but after that you can use whatever incantation you want.
+
+// Ok, so, CRUD apps
+// Create -- `post`
+// Read -- `get`
+// Update -- `put'
+// Destroy -- 'delete`
+
+
