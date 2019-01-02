@@ -54,3 +54,15 @@ server.get('/api/projects', (req, res) => {
         res.json(`Huh, I can't find those actions`)
     })
 })
+
+server.get('/api/actions/:id', (req, res) => {
+    const {id} = req.params; // this is saying "id" is equal to whatever the id parameter of our request is" 
+    actionEndPoint.get(id) // we're passing the id to our get request
+    .then(action => {
+        res.json(action) // by virtue of line 61, this res only returns one action, not the list
+    })
+    .catch(error => {
+        res.status(404) // universal error status code
+        res.json(`Error 404 action not found`)
+    })
+})
