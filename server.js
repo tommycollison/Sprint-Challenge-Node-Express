@@ -51,7 +51,7 @@ server.get('/api/projects', (req, res) => {
     })
     .catch(error => {
         res.status(500)
-        res.json(`Huh, I can't find those actions`)
+        res.json(`Huh, I can't find those projects`)
     })
 })
 
@@ -67,7 +67,6 @@ server.get('/api/actions/:id', (req, res) => {
     })
 })
 
-
 server.get('/api/projects/:id', (req, res) => {
     const {id} = req.params; 
     projectsEndPoint.get(id) 
@@ -77,5 +76,46 @@ server.get('/api/projects/:id', (req, res) => {
     .catch(error => {
         res.status(404) 
         res.json(`Error 404 project not found`)
+    })
+})
+
+
+
+// Projects
+
+// id: number, no need to provide it when creating projects, the database will generate it.
+// name: string, up to 128 characters long, required.
+// description: string, no size limit, required.
+// completed: boolean to indicate if the project has been completed, not required
+
+// Actions
+
+// id: number, no need to provide it when creating posts, the database will automatically generate it.
+// project_id: number, required, must be the id of an existing project.
+// description: string, up to 128 characters long, required.
+// notes: string, no size limit, required. Used to record additional notes or requirements to complete the action.
+// completed: boolean to indicate if the action has been completed, not required
+
+server.post('/api/actions', (req, res) => {
+    const action = req.body;
+    actionEndPoint.insert(action).then(action => {
+        res.json(action);
+    }).catch(err => {
+        res
+        .status(500)
+        .json('Error: failed to add action')
+    })
+})
+
+ // add project
+
+ server.post('/api/projects', (req, res) => {
+    const project = req.body;
+    projectsEndPoint.insert(project).then(project => {
+        res.json(project);
+    }).catch(err => {
+        res
+        .status(500)
+        .json('Error: failed to add project')
     })
 })
