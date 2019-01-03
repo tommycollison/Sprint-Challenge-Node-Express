@@ -10,9 +10,11 @@
 // Routing looks at the URL, returns stringified HTML.
 
 const express = require('express') // imports the express package we asked for when we did `yarn add express`
-const server = express(); // creates the server
+const server = express(); // creates the server 
 const actionEndPoint = require('./data/helpers/actionModel'); // imports our actions data 
 const projectsEndPoint = require('./data/helpers/projectModel') // imports our projects data
+
+server.use(express.json())
 
 server.get('/', (req, res) => {
   res.send('Hello from inside the get');
@@ -51,7 +53,7 @@ server.get('/api/projects', (req, res) => {
     })
     .catch(error => {
         res.status(500)
-        res.json(`Huh, I can't find those projects`)
+        res.json(`Huh, I can't find those actions`)
     })
 })
 
@@ -88,6 +90,8 @@ server.get('/api/projects/:id', (req, res) => {
 // description: string, no size limit, required.
 // completed: boolean to indicate if the project has been completed, not required
 
+
+
 // Actions
 
 // id: number, no need to provide it when creating posts, the database will automatically generate it.
@@ -97,25 +101,17 @@ server.get('/api/projects/:id', (req, res) => {
 // completed: boolean to indicate if the action has been completed, not required
 
 server.post('/api/actions', (req, res) => {
-    const action = req.body;
-    actionEndPoint.insert(action).then(action => {
-        res.json(action);
-    }).catch(err => {
-        res
-        .status(500)
-        .json('Error: failed to add action')
-    })
-})
-
- // add project
-
- server.post('/api/projects', (req, res) => {
-    const project = req.body;
-    projectsEndPoint.insert(project).then(project => {
-        res.json(project);
-    }).catch(err => {
-        res
-        .status(500)
-        .json('Error: failed to add project')
-    })
-})
+    const action = req.body; // calling "action" the body req we send to the server
+    console.log('hi: ', action)
+    console.log(req.body)
+    actionEndPoint.insert(action) // insert our body req payload into actionEndPoint
+        .then(action => {
+            console.log(`hi john`)
+            res.json(action)
+        })
+        .catch(err => {
+            res
+            .status(500)
+            .json({message: "I have failed to add new action"})
+        })
+ })
