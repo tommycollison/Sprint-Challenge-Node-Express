@@ -16,6 +16,15 @@ const projectsEndPoint = require('./data/helpers/projectModel') // imports our p
 
 server.use(express.json())
 
+// I already know how to use middleware in Node -- Line 17 here is what parses JSON-readable content out of request bodies.
+
+
+// Middleware basically changes the order in which functions gets executed  as they're introduced into our server code.
+
+// So which Line 17 it goes: server request -> express.json -> JSON-readable copy -> and back(?)
+
+// `server.use` is the magic incantation for bringing in middleware.
+
 server.get('/', (req, res) => {
   res.send('Hello from inside the get');
 });
@@ -80,8 +89,6 @@ server.get('/api/projects/:id', (req, res) => {
         res.json(`Error 404 project not found`)
     })
 })
-
-
 
 // Projects
 
