@@ -175,3 +175,27 @@ server.post('/api/actions', (req, res) => {
          res.status(500).json(`Hmm, I failed to delete that project`)
      })
  })
+
+ server.put('/api/actions/:id', (req, res) => {
+     const {id} = req.params;
+     const action = req.body;
+
+     actionEndPoint.update(id, action)
+     .then(count => {
+         if (count){
+             actionEndPoint.findById(id)
+             .then(action => {
+                 res.json(action);
+             })
+            } else {
+                res
+                .status(404)
+                .json(`invalid ID`)
+         }
+     })
+     .catch(err => {
+         res
+         .status(500)
+         .json(`Could not update action`)
+     })
+ })
