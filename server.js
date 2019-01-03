@@ -135,3 +135,43 @@ server.post('/api/actions', (req, res) => {
             .json(`I have failed to add new action`)
         })
  })
+
+ server.delete('/api/actions/:id', (req, res) => {
+     const {id} = req.params;
+
+     actionEndPoint.remove(id)
+     .then(count => {
+         if(count) {
+             res
+             .status(201)
+             .json(`action was successfully deleted`)
+         } else {
+             res
+             .status(404)
+             .json(`invalid ID`)
+         }
+     })
+     .catch(err => {
+         res.status(500).json(`Hm, I failed to delete that action`)
+     })
+ })
+
+ server.delete('/api/projects/:id', (req, res) => {
+     const {id} = req.params;
+
+     projectsEndPoint.remove(id)
+     .then(count => {
+         if(count) {
+             res
+             .status(201)
+             .json(`project successfully deleted`)
+         } else {
+             res
+             .status(404)
+             .json(`invalid ID`)
+         }
+     })
+     .catch(err => {
+         res.status(500).json(`Hmm, I failed to delete that project`)
+     })
+ })
