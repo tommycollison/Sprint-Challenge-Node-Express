@@ -90,7 +90,20 @@ server.get('/api/projects/:id', (req, res) => {
 // description: string, no size limit, required.
 // completed: boolean to indicate if the project has been completed, not required
 
-
+server.post('/api/projects', (req, res) => {
+    const project = req.body;
+    console.log(`hi`)
+    projectsEndPoint.insert(project)
+    .then(project => {
+        console.log(`cl from inside my then`)
+        res.json(project)
+    })
+    .catch(err => {
+        res
+        .status(500)
+        .json(`I have failed to add a new action`)
+    })
+})
 
 // Actions
 
@@ -112,6 +125,6 @@ server.post('/api/actions', (req, res) => {
         .catch(err => {
             res
             .status(500)
-            .json({message: "I have failed to add new action"})
+            .json(`I have failed to add new action`)
         })
  })
