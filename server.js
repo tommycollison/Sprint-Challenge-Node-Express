@@ -176,26 +176,95 @@ server.post('/api/actions', (req, res) => {
      })
  })
 
- server.put('/api/actions/:id', (req, res) => {
-     const {id} = req.params;
-     const action = req.body;
 
-     actionEndPoint.update(id, action)
-     .then(count => {
-         if (count){
-             actionEndPoint.findById(id)
-             .then(action => {
-                 res.json(action);
-             })
-            } else {
-                res
-                .status(404)
-                .json(`invalid ID`)
-         }
-     })
-     .catch(err => {
-         res
-         .status(500)
-         .json(`Could not update action`)
-     })
- })
+//  server.put('/api/actions/:id', (req, res) => {
+//     const {id} = req.params;
+//     const action = req.body;
+//     console.log(req.body)
+
+//     actionEndPoint.update(id, action)
+//     .then(count => {
+//             actionEndPoint.findById(id)
+//             .then(action => {
+//                 res
+//                 .status(201)
+//                 .json(`updated successfully`);
+//             })
+//     })
+//     .catch(err => {
+//         res
+//         .status(500)
+//         .json(`Hm, I couldn't update that.`)
+//     })
+// })
+
+
+// Projects
+
+// id: number, no need to provide it when creating projects, the database will generate it.
+// name: string, up to 128 characters long, required.
+// description: string, no size limit, required.
+// completed: boolean to indicate if the project has been completed, not required
+
+server.put('/api/projects/:id', (req, res) => {
+    const {id} = req.params;
+    const project = req.body;
+    projectsEndPoint.update(id, project)
+    .then(project => {
+        res.json(project)
+    })
+    .catch(err =>  {
+        res.status(500)
+        res.json(`could not update project`)
+    })
+})
+
+// Actions
+
+// id: number, no need to provide it when creating posts, the database will automatically generate it.
+// project_id: number, required, must be the id of an existing project.
+// description: string, up to 128 characters long, required.
+// notes: string, no size limit, required. Used to record additional notes or requirements to complete the action.
+// completed: boolean to indicate if the action has been completed, not required
+
+
+server.put('/api/actions/:id', (req, res) => {
+    const {id} = req.params;
+    const action = req.body; 
+    actionEndPoint.update(id, action) 
+    .then(action => {
+        res.json(action) 
+    })
+    .catch(err => {
+        res.status(500) 
+        res.json(`could not update`)
+    })
+})
+
+// server.put('/api/actions/:id', (req, res) => {
+//     const {id} = req.params;
+//     const action = req.body;
+//     console.log(req.body)
+
+//     actionEndPoint.update(id, action)
+//     .then(count => {
+//         if (count){
+//             actionEndPoint.findById(id)
+//             .then(action => {
+//                 res
+//                 .status(201)
+//                 .json(`updated successfully`);
+//             })
+//            } else {
+//                res
+//                .status(404)
+//                .json(`invalid ID, could not update`)
+//         }
+//     })
+//     .catch(err => {
+//         res
+//         .status(500)
+//         .json(`Hm, I couldn't update that.`)
+//     })
+// })
+
